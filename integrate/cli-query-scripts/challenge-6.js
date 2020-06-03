@@ -3,16 +3,20 @@
   logged data: a specific number artist names, starting at a specific row number
 */
 
-const path = require('path');
-const sqlite3 = require('sqlite3').verbose();
+const path = require("path");
+const sqlite3 = require("sqlite3").verbose();
 
-const DB_PATH = path.join(__dirname, '..', 'chinook.sqlite');
+const DB_PATH = path.join(__dirname, "..", "chinook.sqlite");
 
 const db = new sqlite3.Database(DB_PATH);
 
-const userInput = {};
+const userInput = {
+  column: process.argv[2],
+  start: process.argv[3],
+  end: process.argv[4],
+};
 
-const queryString = ``;
+const queryString = `select ${userInput.column} from artists limit ${userInput.start},${userInput.end}`;
 
 db.all(queryString, (err, rows) => {
   if (err) {
@@ -20,6 +24,5 @@ db.all(queryString, (err, rows) => {
   } else {
     console.log(rows);
   }
-
   db.close();
 });
