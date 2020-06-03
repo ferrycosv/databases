@@ -3,16 +3,19 @@
   logged data: all columns from the invoices table, sorted as instructed by the user input
 */
 
-const path = require('path');
-const sqlite3 = require('sqlite3').verbose();
+const path = require("path");
+const sqlite3 = require("sqlite3").verbose();
 
-const DB_PATH = path.join(__dirname, '..', 'chinook.sqlite');
+const DB_PATH = path.join(__dirname, "..", "chinook.sqlite");
 
 const db = new sqlite3.Database(DB_PATH);
 
-const userInput = {};
+const userInput = {
+  orderBy: process.argv[2],
+  sort: process.argv[3],
+};
 
-const queryString = ``;
+const queryString = `select * from invoices order by ${userInput.orderBy} ${userInput.sort}`;
 
 db.all(queryString, (err, rows) => {
   if (err) {
@@ -20,7 +23,5 @@ db.all(queryString, (err, rows) => {
   } else {
     console.log(rows);
   }
-
   db.close();
 });
-
